@@ -3,7 +3,7 @@ graf <-
             theta.prior.pars = c(log(10), 1), hessian = FALSE, opt.control = list(),
             verbose = FALSE, method = c('Laplace', 'EP')) {
     
-    method <- match.arg(method)
+    method <- match.arg(method, c('Laplace', 'EP'))
     
     # optionally optimise graf (by recursively calling this function)
     if (opt.l) {
@@ -67,8 +67,8 @@ graf <-
     
     # set up the default prior, if not specified
     exp.prev <- sum(weights[y == 1]) / sum(weights)
-    if (is.null(prior))  mnfun <- function(x) rep(exp.prev, nrow(x))
-    else mnfun <- prior
+    if (is.null(prior))  {mnfun <- function(x) rep(exp.prev, nrow(x))
+    }else {mnfun <- prior}
     
     # give an approximation to l, if not specified (or optimised)
     if (is.null(l)) {
